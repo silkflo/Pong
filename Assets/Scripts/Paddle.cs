@@ -8,16 +8,11 @@ public class Paddle : MonoBehaviour
     public float speed;
     public float rightScreenEdge;
     public float leftScreenEdge;
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public GameManager gm;  
 
-    // Update is called once per frame
     void Update()
     {
+        if (gm.gameOver) { return; }
         float horizontal = Input.GetAxis("Horizontal");
 
         transform.Translate(Vector2.right * horizontal * Time.deltaTime * speed);

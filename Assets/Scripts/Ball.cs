@@ -9,6 +9,8 @@ public class Ball : MonoBehaviour
     public bool inPlay;
     public Transform paddle;
     public float speed;
+    public Transform explosion;
+    public GameManager gm;
 
     // Start is called before the first frame update
     void Start()
@@ -21,7 +23,13 @@ public class Ball : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!inPlay)
+        if (gm.gameOver) {
+            gameObject.SetActive(false);
+            return;
+        }
+
+
+        if (!inPlay)
         {
             transform.position = paddle.position;
         }
@@ -35,13 +43,26 @@ public class Ball : MonoBehaviour
 
     }
 
-     void OnTriggerEnter2D(Collider2D other)
+     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (other.CompareTag("bottom"))
+        if (collision.CompareTag("bottom"))
         {
-            Debug.Log("Ball hit the bottom");
             rb.velocity = Vector2.zero;
             inPlay = false;
+            gm.UpdateLives(-1);
+        }
+    }
+
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.transform.CompareTag("brick"))
+        {
+            Transform newExplosion = Instantiate(explosion, collision.transform.position, collision.transform.rotation);
+            Destroy(newExplosion.gameObject,2.5f);
+            gm.UpdateScore(collision.gameObject.GetComponent<Brick>().points);
+            gm.UpdateNumberOfBricks();
+            Destroy(collision.gameObject);
         }
     }
 
