@@ -5,35 +5,40 @@ using UnityEngine;
 public class Ball : MonoBehaviour
 {
 
+    public GameManager gm;
     public Rigidbody2D rb;
     public bool inPlay;
     public Transform paddle;
     public float speed;
     public Transform explosion;
-    public GameManager gm;
+    public Transform powerUp;
+    private GameObject powerUpTag;
 
-    // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-
+     
        
     }
 
-    // Update is called once per frame
     void Update()
     {
+        
+        //Ball Freeze on Game Over
         if (gm.gameOver) {
+           //Don't execute Ball script
             gameObject.SetActive(false);
             return;
         }
 
-
+        //Init ball position on game start
         if (!inPlay)
         {
-            transform.position = paddle.position;
+           transform.position = paddle.position;
+
         }
 
+        //launch the ball on game start
         if (Input.GetButtonDown("Jump") && !inPlay)
         {
             inPlay = true;
@@ -45,24 +50,48 @@ public class Ball : MonoBehaviour
 
      void OnTriggerEnter2D(Collider2D collision)
     {
+        //ball lost
         if (collision.CompareTag("bottom"))
         {
             rb.velocity = Vector2.zero;
             inPlay = false;
+            powerUpTag = GameObject.FindGameObjectWithTag("extraLife");
+            Destroy(powerUpTag);
             gm.UpdateLives(-1);
+           
         }
     }
 
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        //ball collision with brick
         if (collision.transform.CompareTag("brick"))
         {
-            Transform newExplosion = Instantiate(explosion, collision.transform.position, collision.transform.rotation);
-            Destroy(newExplosion.gameObject,2.5f);
-            gm.UpdateScore(collision.gameObject.GetComponent<Brick>().points);
-            gm.UpdateNumberOfBricks();
-            Destroy(collision.gameObject);
+            Brick brick = collision.gameObject.GetComponent<Brick>();
+            //brick break
+            if (brick.hitsToBreak > 1)
+            {
+                brick.BreakBrick();
+            }
+            else
+            {
+                //set powerup
+                int randChance = Random.Range(1, 101);
+                if (randChance < 50)
+                {
+                    Instantiate(powerUp, collision.transform.position, collision.transform.rotation);
+                }
+
+                //Explosion Effect
+                Transform newExplosion = Instantiate(explosion, collision.transform.position, collision.transform.rotation);
+                Destroy(newExplosion.gameObject, 2.5f);
+                //Score
+                gm.UpdateScore(brick.points);
+                //Remove bricks
+                gm.UpdateNumberOfBricks();
+                Destroy(collision.gameObject);
+            }
         }
     }
 

@@ -56,10 +56,11 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\PowerUp.cs" />
     <Compile Include="Assets\Scripts\Paddle.cs" />
     <Compile Include="Assets\Scripts\Ball.cs" />
-    <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Brick.cs" />
+    <Compile Include="Assets\Scripts\GameManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -727,6 +728,9 @@
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.AdaptivePerformance.Samsung.Android.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.AdaptivePerformance.Samsung.Android.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.VisualScripting.State.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.State.Editor.dll</HintPath>
     </Reference>
@@ -862,11 +866,17 @@
     <Reference Include="Unity.AdaptivePerformance.Profiler.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.AdaptivePerformance.Profiler.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.AdaptivePerformance.Simulator.VRR.Extension">
+      <HintPath>Library\ScriptAssemblies\Unity.AdaptivePerformance.Simulator.VRR.Extension.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.2D.SpriteShape.Runtime">
       <HintPath>Library\ScriptAssemblies\Unity.2D.SpriteShape.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VisualScripting.State">
       <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.State.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.AdaptivePerformance.Samsung.Android">
+      <HintPath>Library\ScriptAssemblies\Unity.AdaptivePerformance.Samsung.Android.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
