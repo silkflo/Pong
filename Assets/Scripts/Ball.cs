@@ -10,8 +10,8 @@ public class Ball : MonoBehaviour
     public bool inPlay;
     public Transform paddle;
     public float speed;
-    public Transform explosion;
     public Transform powerUp;
+    public GameObject ChallengeLevelPanel;
     private GameObject powerUpTag;
     AudioSource audio;
     public GameManager gm;
@@ -26,23 +26,23 @@ public class Ball : MonoBehaviour
 
     void Update()
     {
-        
+        float gameSpeed;
+        var vel = rb.velocity;      //to get a Vector3 representation of the velocity
+        gameSpeed = vel.magnitude;
+        Debug.Log(gameSpeed);
+
         //Ball Freeze on Game Over
         if (gm.gameOver) {
             //Don't execute Ball script
             //gameObject.SetActive(false);
             transform.position = paddle.position;
-
-
             return;
         }
 
         //Init ball position on game start
         if (!inPlay)
         {
-          
-            transform.position = paddle.position;
-
+          transform.position = paddle.position;
         }
 
         //launch the ball on game start
@@ -51,11 +51,8 @@ public class Ball : MonoBehaviour
             inPlay = true;
             rb.AddForce(Vector2.up * speed);
         }
-
-
     }
-
-     void OnTriggerEnter2D(Collider2D collision)
+    void OnTriggerEnter2D(Collider2D collision)
     {
         //ball lost
         if (collision.CompareTag("bottom"))
@@ -64,7 +61,11 @@ public class Ball : MonoBehaviour
             inPlay = false;
             powerUpTag = GameObject.FindGameObjectWithTag("extraLife");
             Destroy(powerUpTag);
-            gm.UpdateLives(-1);
+
+            if (!ChallengeLevelPanel || !ChallengeLevelPanel.activeSelf)
+            {
+                gm.UpdateLives(-1);
+            } 
            
         }
     }
@@ -90,10 +91,6 @@ public class Ball : MonoBehaviour
                     Instantiate(powerUp, collision.transform.position, collision.transform.rotation);
                 }
 
-                //Explosion Effect
-                Transform newExplosion = Instantiate(explosion, collision.transform.position, collision.transform.rotation);
-                Destroy(newExplosion.gameObject, 2.5f);
-                //Score
                 gm.UpdateScore(brick.points);
                 //Remove bricks
                 gm.UpdateNumberOfBricks();

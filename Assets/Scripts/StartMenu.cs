@@ -10,8 +10,8 @@ public class StartMenu : MonoBehaviour
         Application.Quit();
     }
 
-    public void StartGame()
+    public void EndlessGame()
     {
-        SceneManager.LoadScene("Main");
+        SceneManager.LoadScene("Endless");
     }
 }

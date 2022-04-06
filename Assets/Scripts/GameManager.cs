@@ -7,67 +7,99 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-
+    public enum SceneName { Endless , Challenge1 }
+    public SceneName sceneName;
     public int lives;
     public int score;
+    public int numberOfBricks;
+    public int currentLevelIndex = 0;
+    public float brickLeftMargin;
     public Text livesText;
     public Text scoreText;
     public Text highScoreText;
     public bool gameOver;
     public GameObject gameOverPanel;
     public GameObject loadLevelPanel;
-    public int numberOfBricks;
-    public Transform[] levels;
-    public int currentLevelIndex = 0;
-
-    private string lve = "Lives: ";
-    private string scr = "Score: ";
+    public GameObject blueBrick;
+    public GameObject yellowBrick;
+   
 
     void Start()
     {
-        livesText.text = lve + lives;
-        scoreText.text = scr + score;
+        //UI Text
+
+        livesText.text = "Lives: " + lives;
+
+        if (scoreText)
+        {
+            scoreText.text = score.ToString();
+        }
         numberOfBricks = GameObject.FindGameObjectsWithTag("brick").Length;
       }
 
     public void UpdateLives(int changeInLives)
     {
         lives += changeInLives;
-
+        //Game Over trigger
         if(lives <= 0)
         {
             lives = 0;
             GameOver();
         }
-
-
-        livesText.text = lve + lives;
+        livesText.text = "Lives: " + lives;
     }
 
     public void UpdateNumberOfBricks()
     {
+        //Game acition when no brick left
         numberOfBricks--;
         if(numberOfBricks <= 0){
-            Debug.Log("currentLevelIndex : " + currentLevelIndex + "levels Length : " + levels.Length);
-            if (currentLevelIndex >= levels.Length - 1)
+            //Game Over
+            if (lives==0)
             {
                 GameOver();
-            } else
+            } 
+            //Load new level
+            else if (sceneName == SceneName.Endless)
             {
                 loadLevelPanel.SetActive(true);
                 loadLevelPanel.GetComponentInChildren<Text>().text = "level " + (currentLevelIndex + 2);
-                gameOver = true;
+                gameOver = true; //it pauses and init the game
                 Invoke("LoadLevel", 3f);
-               // LoadLevel();
+            } else
+            {
+                loadLevelPanel.SetActive(true);
             }
         }
     }
 
-
     void LoadLevel()
     {
-        currentLevelIndex++;
-        Instantiate(levels[currentLevelIndex], Vector2.zero, Quaternion.identity);
+
+        currentLevelIndex++; //Keep track on the player level
+
+        // load random bricks for the new level
+        GameObject brick;
+        float initBrickMargin = brickLeftMargin;
+        for(int i = 0; i < 5; i++)
+        {
+            //Increase the range for new color brick
+            int brickChoosen = Random.Range(1, 3);
+
+            brick = brickChoosen switch
+            {
+                1 => yellowBrick,
+                2 => blueBrick,
+                _ => yellowBrick,
+            };
+            brickLeftMargin += 0.76f;
+            Instantiate(brick, new Vector2(brickLeftMargin, 3.0f), Quaternion.identity);
+            Instantiate(brick, new Vector2(brickLeftMargin, 2.70f), Quaternion.identity);
+            Instantiate(brick, new Vector2(brickLeftMargin, 2.40f), Quaternion.identity);
+        }
+         brickLeftMargin = initBrickMargin;
+
+        //Init the game back
         numberOfBricks = GameObject.FindGameObjectsWithTag("brick").Length;
         gameOver = false;
         loadLevelPanel.SetActive(false);
@@ -75,22 +107,26 @@ public class GameManager : MonoBehaviour
 
     public void UpdateScore(int points)
     {
-        score += points;
-        scoreText.text = scr + score;
-
+        //Score Text
+        if (scoreText)
+        {
+            score += points;
+            scoreText.text = score.ToString();
+        }
     }
 
     void GameOver()
     {
-        gameOver = true;
-        gameOverPanel.SetActive(true);
-        int highScore = PlayerPrefs.GetInt("HIGHSCORE");
-        if(score > highScore)
+        gameOver = true;  //gameOver true ruturn other scripts null
+        gameOverPanel.SetActive(true); //End game display
+        //Set the highscore
+        int highScore = PlayerPrefs.GetInt("HIGHSCORE"); 
+        if(score > highScore && sceneName == SceneName.Endless)
         {
             PlayerPrefs.SetInt("HIGHSCORE", score);
             highScoreText.text = "New High Score " + score;
         }
-        else
+        else if(sceneName == SceneName.Endless)
         {
             highScoreText.text = "High Score " + score;
         }
@@ -98,7 +134,13 @@ public class GameManager : MonoBehaviour
 
     public void PlayAgain()
     {
-        SceneManager.LoadScene("Main");
+        if (sceneName == SceneName.Endless)
+        {
+            SceneManager.LoadScene("Endless");
+        } else if (sceneName == SceneName.Challenge1)
+        {
+            SceneManager.LoadScene("Challenge_1");
+        }
     }
 
     public void Menu()
