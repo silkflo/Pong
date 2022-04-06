@@ -12,7 +12,9 @@ public class Paddle : MonoBehaviour
 
     void Update()
     {
-        if (gm.gameOver) { return; }
+        if (gm.gameOver) {
+            return;
+        }
         float horizontal = Input.GetAxis("Horizontal");
 
         transform.Translate(Vector2.right * horizontal * Time.deltaTime * speed);

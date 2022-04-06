@@ -5,7 +5,7 @@ using UnityEngine;
 public class Ball : MonoBehaviour
 {
 
-    public GameManager gm;
+    
     public Rigidbody2D rb;
     public bool inPlay;
     public Transform paddle;
@@ -13,10 +13,13 @@ public class Ball : MonoBehaviour
     public Transform explosion;
     public Transform powerUp;
     private GameObject powerUpTag;
+    AudioSource audio;
+    public GameManager gm;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        audio = GetComponent<AudioSource>();
      
        
     }
@@ -26,15 +29,19 @@ public class Ball : MonoBehaviour
         
         //Ball Freeze on Game Over
         if (gm.gameOver) {
-           //Don't execute Ball script
-            gameObject.SetActive(false);
+            //Don't execute Ball script
+            //gameObject.SetActive(false);
+            transform.position = paddle.position;
+
+
             return;
         }
 
         //Init ball position on game start
         if (!inPlay)
         {
-           transform.position = paddle.position;
+          
+            transform.position = paddle.position;
 
         }
 
@@ -92,6 +99,8 @@ public class Ball : MonoBehaviour
                 gm.UpdateNumberOfBricks();
                 Destroy(collision.gameObject);
             }
+
+            audio.Play();
         }
     }
 
