@@ -34,7 +34,7 @@ public class Ball : MonoBehaviour
         //Ball Freeze on Game Over
         if (gm.gameOver) {
             //Don't execute Ball script
-            //gameObject.SetActive(false);
+            //set ball positon
             transform.position = paddle.position;
             return;
         }
@@ -46,11 +46,17 @@ public class Ball : MonoBehaviour
         }
 
         //launch the ball on game start
-        if (Input.GetButtonDown("Jump") && !inPlay)
+        if (Input.GetMouseButtonUp(0) && !inPlay)
         {
             inPlay = true;
             rigidBody.AddForce(Vector2.up * speed);
         }
+    }
+
+    void LaunchBall()
+    {
+        inPlay = true;
+        rigidBody.AddForce(Vector2.up * speed);
     }
 
     void OnTriggerEnter2D(Collider2D collision)

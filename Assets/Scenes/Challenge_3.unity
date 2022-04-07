@@ -965,7 +965,7 @@ MonoBehaviour:
   inPlay: 0
   paddle: {fileID: 1426517029}
   speed: 400
-  speedAcceleration: 50
+  speedAcceleration: 80
   acceleration: 1
   powerUp: {fileID: 8032812280908789562, guid: e50f4c740994a8545961380b31c73584, type: 3}
   ChallengeLevelPanel: {fileID: 396251053}
