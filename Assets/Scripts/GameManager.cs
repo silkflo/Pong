@@ -7,13 +7,14 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public enum SceneName { Endless , Challenge1 }
+    public enum SceneName { Endless , Challenge }
     public SceneName sceneName;
     public int lives;
     public int score;
     public int numberOfBricks;
     public int currentLevelIndex = 0;
     public float brickLeftMargin;
+    public float timeChallenge;
     public Text livesText;
     public Text scoreText;
     public Text highScoreText;
@@ -22,14 +23,24 @@ public class GameManager : MonoBehaviour
     public GameObject loadLevelPanel;
     public GameObject blueBrick;
     public GameObject yellowBrick;
-   
+    
+
 
     void Start()
     {
-        //UI Text
+        //Lives Text Display
+        int challengeLife = PlayerPrefs.GetInt("LIFE");
+        if (sceneName == SceneName.Challenge)
+        {
+           livesText.text = "Lives: " + challengeLife;
+        }
+        else
+        {
+            livesText.text = "Lives: " + lives;
+        }
 
-        livesText.text = "Lives: " + lives;
-
+        Debug.Log("Endless : "+ lives+ " Challenge: "+ challengeLife);
+       //Score Display
         if (scoreText)
         {
             scoreText.text = score.ToString();
@@ -39,9 +50,19 @@ public class GameManager : MonoBehaviour
 
     public void UpdateLives(int changeInLives)
     {
-        lives += changeInLives;
-        //Game Over trigger
-        if(lives <= 0)
+        if (sceneName == SceneName.Challenge)
+        {
+            //Add life from the power up
+            PlayerPrefs.SetInt("LIFE", lives += changeInLives);
+        }
+        else
+        {
+            lives += changeInLives;
+        }
+            
+
+            //Game Over trigger
+            if (lives <= 0)
         {
             lives = 0;
             GameOver();
@@ -75,8 +96,7 @@ public class GameManager : MonoBehaviour
 
     void LoadLevel()
     {
-
-        currentLevelIndex++; //Keep track on the player level
+         currentLevelIndex++; //Keep track on the player level
 
         // load random bricks for the new level
         GameObject brick;
@@ -115,9 +135,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void GameOver()
+    public void GameOver()
     {
-        gameOver = true;  //gameOver true ruturn other scripts null
+        gameOver = true;  //gameOver true return other scripts null
         gameOverPanel.SetActive(true); //End game display
         //Set the highscore
         int highScore = PlayerPrefs.GetInt("HIGHSCORE"); 
@@ -132,20 +152,58 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void PlayAgain()
-    {
-        if (sceneName == SceneName.Endless)
-        {
-            SceneManager.LoadScene("Endless");
-        } else if (sceneName == SceneName.Challenge1)
-        {
-            SceneManager.LoadScene("Challenge_1");
-        }
-    }
-
-    public void Menu()
+   
+//GAME NAVIGUATION
+    public void GoToMenu()
     {
         SceneManager.LoadScene("StartMenu");
+    }
+    public void GoToEndless(bool gameOver)
+    {
+        if (gameOver)
+        {
+            SceneManager.LoadScene("Endless");
+            PlayerPrefs.SetInt("LIFE", 3);
+        } else
+        {
+            SceneManager.LoadScene("Endless");
+        }
+    }
+    public void GoToChallenge1(bool gameOver)
+    {
+        if (gameOver)
+        {
+            SceneManager.LoadScene("Challenge_1");
+            PlayerPrefs.SetInt("LIFE", 3);
+        }
+        else
+        {
+            SceneManager.LoadScene("Challenge_1");
+        };
+    } 
+    public void GoToChallenge2(bool gameOver)
+    {
+        if (gameOver)
+        {
+            SceneManager.LoadScene("Challenge_2");
+            PlayerPrefs.SetInt("LIFE", 3);
+        }
+        else
+        {
+            SceneManager.LoadScene("Challenge_2");
+        }
+    }
+    public void GoToChallenge3(bool gameOver)
+    {
+        if (gameOver)
+        {
+            SceneManager.LoadScene("Challenge_3");
+            PlayerPrefs.SetInt("LIFE", 3);
+        }
+        else
+        {
+            SceneManager.LoadScene("Challenge_3");
+        }
     }
 
 }

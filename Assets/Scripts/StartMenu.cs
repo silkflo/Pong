@@ -14,4 +14,10 @@ public class StartMenu : MonoBehaviour
     {
         SceneManager.LoadScene("Endless");
     }
+    public void ChallengeGame()
+    {
+        PlayerPrefs.SetInt("LIFE", 3);
+        SceneManager.LoadScene("Challenge_1");
+    }
+
 }

@@ -6,31 +6,31 @@ public class Ball : MonoBehaviour
 {
 
     
-    public Rigidbody2D rb;
+    public Rigidbody2D rigidBody;
     public bool inPlay;
     public Transform paddle;
     public float speed;
+    public int speedAcceleration = 50;
+    public bool acceleration ;
     public Transform powerUp;
     public GameObject ChallengeLevelPanel;
-    private GameObject powerUpTag;
-    AudioSource audio;
     public GameManager gm;
+    AudioSource AudioSource;
+    private GameObject powerUpTag;
+    //private float timer = 0;
+    private int paddleHitCount = 0;
+    Vector2 accelerate;
 
+    
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        audio = GetComponent<AudioSource>();
-     
-       
+        rigidBody = GetComponent<Rigidbody2D>();
+        AudioSource = GetComponent<AudioSource>();
+          
     }
 
     void Update()
     {
-        float gameSpeed;
-        var vel = rb.velocity;      //to get a Vector3 representation of the velocity
-        gameSpeed = vel.magnitude;
-        Debug.Log(gameSpeed);
-
         //Ball Freeze on Game Over
         if (gm.gameOver) {
             //Don't execute Ball script
@@ -49,24 +49,29 @@ public class Ball : MonoBehaviour
         if (Input.GetButtonDown("Jump") && !inPlay)
         {
             inPlay = true;
-            rb.AddForce(Vector2.up * speed);
+            rigidBody.AddForce(Vector2.up * speed);
         }
     }
+
     void OnTriggerEnter2D(Collider2D collision)
     {
         //ball lost
         if (collision.CompareTag("bottom"))
         {
-            rb.velocity = Vector2.zero;
+            rigidBody.velocity = Vector2.zero;
             inPlay = false;
             powerUpTag = GameObject.FindGameObjectWithTag("extraLife");
             Destroy(powerUpTag);
-
+            paddleHitCount = 0;
+            //Lost Lives
             if (!ChallengeLevelPanel || !ChallengeLevelPanel.activeSelf)
             {
                 gm.UpdateLives(-1);
-            } 
-           
+                int challengeLife = PlayerPrefs.GetInt("LIFE");
+                PlayerPrefs.SetInt("LIFE", challengeLife--);
+
+            }
+            
         }
     }
 
@@ -97,7 +102,26 @@ public class Ball : MonoBehaviour
                 Destroy(collision.gameObject);
             }
 
-            audio.Play();
+            AudioSource.Play();
+        }
+
+        if (collision.transform.CompareTag("paddle"))
+        {
+            if (acceleration && inPlay)
+            {
+                paddleHitCount++;
+
+                if (paddleHitCount % 2 == 0)
+                {
+                    Debug.Log("Speed!!");
+                    rigidBody.AddForce(Vector2.up * speedAcceleration);
+                }
+
+
+            }
+
+            Debug.Log(paddleHitCount);
+
         }
     }
 

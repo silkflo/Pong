@@ -209,15 +209,15 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1771838841}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: PlayAgain
-        m_Mode: 1
+        m_MethodName: GoToEndless
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &184493071
 MonoBehaviour:
@@ -385,7 +385,7 @@ RectTransform:
   m_Children:
   - {fileID: 1059116302}
   m_Father: {fileID: 1819398441}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -842,11 +842,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e8e85847d770d14191204bdd0d75d57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 0}
+  rigidBody: {fileID: 0}
   inPlay: 0
   paddle: {fileID: 1426517029}
   speed: 400
+  speedAcceleration: 50
+  acceleration: 0
   powerUp: {fileID: 8032812280908789562, guid: e50f4c740994a8545961380b31c73584, type: 3}
+  ChallengeLevelPanel: {fileID: 0}
   gm: {fileID: 1771838841}
 --- !u!58 &800105176
 CircleCollider2D:
@@ -1294,7 +1297,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1771838841}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: Menu
+        m_MethodName: GoToMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1349,13 +1352,29 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1819398441}
     m_Modifications:
+    - target: {fileID: 101061016703971088, guid: 373bc3c4f73df6945bb380bd3539286e, type: 3}
+      propertyPath: m_Name
+      value: 'Lives Text '
+      objectReference: {fileID: 0}
+    - target: {fileID: 101061016703971091, guid: 373bc3c4f73df6945bb380bd3539286e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -80
+      objectReference: {fileID: 0}
+    - target: {fileID: 101061016703971093, guid: 373bc3c4f73df6945bb380bd3539286e, type: 3}
+      propertyPath: m_Text
+      value: 'Lives : 99'
+      objectReference: {fileID: 0}
+    - target: {fileID: 101061017150723734, guid: 373bc3c4f73df6945bb380bd3539286e, type: 3}
+      propertyPath: m_Name
+      value: Back Button
+      objectReference: {fileID: 0}
     - target: {fileID: 101061017150723736, guid: 373bc3c4f73df6945bb380bd3539286e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1771838841}
     - target: {fileID: 101061017150723736, guid: 373bc3c4f73df6945bb380bd3539286e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Menu
+      value: GoToMenu
       objectReference: {fileID: 0}
     - target: {fileID: 101061017372379592, guid: 373bc3c4f73df6945bb380bd3539286e, type: 3}
       propertyPath: m_Name
@@ -1371,7 +1390,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 101061017372379595, guid: 373bc3c4f73df6945bb380bd3539286e, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 101061017372379595, guid: 373bc3c4f73df6945bb380bd3539286e, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1890,9 +1909,9 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1142953418}
   - {fileID: 2075674801}
   - {fileID: 396251056}
-  - {fileID: 1142953418}
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2294,7 +2313,7 @@ RectTransform:
   - {fileID: 184493069}
   - {fileID: 1101847662}
   m_Father: {fileID: 1819398441}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
