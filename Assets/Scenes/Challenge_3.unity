@@ -880,9 +880,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccb65f5baebd16140996d7f9c3060713, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  rightScreenEdge: 1.49
-  leftScreenEdge: -1.49
   gm: {fileID: 680072717}
 --- !u!60 &681397009
 PolygonCollider2D:
@@ -969,7 +966,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e8e85847d770d14191204bdd0d75d57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 0}
   inPlay: 0
   speed: 400
   speedAcceleration: 100
@@ -2623,7 +2619,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 101061017066334991, guid: 373bc3c4f73df6945bb380bd3539286e, type: 3}
       propertyPath: m_Text
-      value: Ball speeding up  break all bricks
+      value: Ball speeding up. Break all bricks
       objectReference: {fileID: 0}
     - target: {fileID: 101061017066334991, guid: 373bc3c4f73df6945bb380bd3539286e, type: 3}
       propertyPath: m_FontData.m_FontSize
@@ -2634,12 +2630,20 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 101061017066335089, guid: 373bc3c4f73df6945bb380bd3539286e, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 101061017066335089, guid: 373bc3c4f73df6945bb380bd3539286e, type: 3}
       propertyPath: m_AnchorMin.x
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 101061017066335089, guid: 373bc3c4f73df6945bb380bd3539286e, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 101061017066335089, guid: 373bc3c4f73df6945bb380bd3539286e, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 308.9
+      value: 367.9
       objectReference: {fileID: 0}
     - target: {fileID: 101061017066335089, guid: 373bc3c4f73df6945bb380bd3539286e, type: 3}
       propertyPath: m_SizeDelta.y
@@ -2647,11 +2651,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 101061017066335089, guid: 373bc3c4f73df6945bb380bd3539286e, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 51.548016
+      value: 22.047009
       objectReference: {fileID: 0}
     - target: {fileID: 101061017066335089, guid: 373bc3c4f73df6945bb380bd3539286e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -72
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 101061017150723734, guid: 373bc3c4f73df6945bb380bd3539286e, type: 3}
       propertyPath: m_Name
@@ -2699,11 +2703,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 101061017372379595, guid: 373bc3c4f73df6945bb380bd3539286e, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 412
+      value: 591
       objectReference: {fileID: 0}
     - target: {fileID: 101061017372379595, guid: 373bc3c4f73df6945bb380bd3539286e, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 135.39862
+      value: 160.5446
       objectReference: {fileID: 0}
     - target: {fileID: 101061017372379595, guid: 373bc3c4f73df6945bb380bd3539286e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2739,7 +2743,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 101061017372379595, guid: 373bc3c4f73df6945bb380bd3539286e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -67.69934
+      value: -80.27234
       objectReference: {fileID: 0}
     - target: {fileID: 101061017372379595, guid: 373bc3c4f73df6945bb380bd3539286e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

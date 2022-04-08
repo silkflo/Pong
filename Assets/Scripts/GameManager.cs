@@ -10,8 +10,9 @@ public class GameManager : MonoBehaviour
     public enum SceneName { Endless , Challenge }   //Get the type of game play
     public SceneName sceneName;                         
     public int currentLevelIndex = 0;               //Endless game Level number
-    public int bricksRowQty = 5;                    //Bricks quantity by row
-    public float brickMarginLeft = -2.2f;           //Adjust the brick block position from the left border
+    public int bricksColumnQty = 5;                 //Bricks column quantity
+    public int brickRowQty = 3;
+    public float brickPositionX = -2.2f;           //Adjust the brick block position from on X
     public float timeChallenge;                     //Max time allowed for the time challenge
     public Text livesText;                          //Lives display text
     public Text scoreText;                          //Score display text
@@ -83,29 +84,32 @@ public class GameManager : MonoBehaviour
 
         //Add random bricks for the new level
         GameObject brick;
-        float initBrickMargin = brickMarginLeft;    //Save the brick quantity at level start
-        
+        float initBrickPositionX = brickPositionX;    //Save the init position on X the 1st brick
+        float brickPositionY = 2.10f;     //Brick position on Y axis
         //Add 3 rows of random bricks 
-        for(int i = 0; i < bricksRowQty; i++)
+        for (int i = 0; i < bricksColumnQty; i++)
         {
-            int brickChoosen = Random.Range(0, bricks.Length);  //Choose the brick
-           
-            //Call the brick
-            brick = brickChoosen switch
-            {
-                1 => bricks[brickChoosen],
-                2 => bricks[brickChoosen],
-                _ => bricks[0],
-            };
-            brickMarginLeft += 0.76f;   //Add margin for the next brick column position
-            //Instantiate the bricks by column on each loop
-            Instantiate(brick, new Vector2(brickMarginLeft, 3.0f), Quaternion.identity);
-            Instantiate(brick, new Vector2(brickMarginLeft, 2.70f), Quaternion.identity);
-            Instantiate(brick, new Vector2(brickMarginLeft, 2.40f), Quaternion.identity);
-        }
-        brickMarginLeft = initBrickMargin; //Set the original margin back for the next level
+            brickPositionX += 0.76f;   //Add margin for the next brick column position
 
-        
+            //re-loop for each row to set each bricks
+            for (int j = 0; j < brickRowQty; j++)
+            {
+                int brickChoosen = Random.Range(0, bricks.Length);  //Choose the brick
+                brickPositionY += 0.3f;  //Add margin for the next row
+                //Call the brick
+                brick = brickChoosen switch
+                {
+                    1 => bricks[brickChoosen],
+                    2 => bricks[brickChoosen],
+                    _ => bricks[0],
+                };
+                Instantiate(brick, new Vector2(brickPositionX, brickPositionY), Quaternion.identity);
+            }
+            brickPositionY = 2.10f;    //init back the position for the next brick spawn on Y
+        }
+
+        brickPositionX = initBrickPositionX; //Set the original position on X, for the next level loading
+
         numberOfBricks = GameObject.FindGameObjectsWithTag("brick").Length;  //Get the new bricks quantity
         gameOver = false;  //Enable gameplay
         successPanel.SetActive(false);  //Hide the success panel 
@@ -191,5 +195,14 @@ public class GameManager : MonoBehaviour
         {
             SceneManager.LoadScene("Challenge_3");
         }
+    }
+
+    public void PauseGame()
+    {
+        Time.timeScale = 0;
+    }
+    public void ResumeGame()
+    {
+        Time.timeScale = 1;
     }
 }
