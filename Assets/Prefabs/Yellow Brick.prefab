@@ -126,7 +126,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   points: 1
   hitsToBreak: 1
-  hitSprite: {fileID: 0}
+  brickCracked: {fileID: 21300000, guid: bc68a257b0f0c2044ac1882996f130a7, type: 3}
   explosion:
   - {fileID: 6981048811992881712, guid: 4b705781c902cd24fa213325d942f6f5, type: 3}
   - {fileID: 1285170839691905201, guid: 8f614239dae3a8c408d0982ab6ee7706, type: 3}

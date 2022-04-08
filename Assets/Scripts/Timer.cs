@@ -6,15 +6,14 @@ using UnityEngine.UI;
 
 public class Timer : MonoBehaviour
 {
-    
-    public Text timeText;
-    public GameManager gm;
-    public Ball ball;
-    private float timeValue;
+    public Text timeText;           //Time display
+    public GameManager gm;          //Use Game Manager
+    public Ball ball;               //Use ball script
+    private float timeValue;        //Time value
 
     private void Start()
     {
-        timeValue = gm.timeChallenge - 1;
+        timeValue = gm.timeChallenge - 1;  //Set the time value on start
     }
     
     private void Update()
@@ -23,32 +22,33 @@ public class Timer : MonoBehaviour
         {
             if (ball.inPlay)
             {
-                timeValue -= Time.deltaTime;
+                timeValue -= Time.deltaTime;    //Reduce the time by 1 each second, as long the game is in play and time not out
             }
         }
         else
         {
-            timeValue = 0;
+            timeValue = 0;  //Time below 0 set to 0
         }
 
-        DisplayTime(timeValue);
+        TimeManagement(timeValue);  //Display the time or set to game over on time out
     }
 
-    void DisplayTime(float timeToDisplay)
+    void TimeManagement(float timeToDisplay)
     {
+        //Time out 
         if(timeToDisplay <= 0)
         {
-            timeToDisplay = 0;
-            gm.GameOver();
+            timeToDisplay = 0;  //Time display is 0
+            gm.GameOver();      //Display game over panel, disable ball and paddle
 
         } else
         {
-            timeToDisplay += 1;
+            timeToDisplay += 1;     //Time to display
         }
-
+        //Convert a decimal number to a time
         float minutes = Mathf.FloorToInt(timeToDisplay / 60);
         float seconds = Mathf.FloorToInt(timeToDisplay % 60);
 
-        timeText.text = string.Format("{0:00}:{1:00}", minutes, seconds); //{0:00} , the first 2 digits select the type, the second 2 digits is the display
+        timeText.text = string.Format("{0:00}:{1:00}", minutes, seconds); //{0:00} , the first 2 digits are the type, the second 2 digits are the display
     }
 }

@@ -4,130 +4,115 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
-
     
-    public Rigidbody2D rigidBody;
-    public bool inPlay;
-    public Transform paddle;
-    public float speed;
-    public int speedAcceleration = 50;
-    public bool acceleration ;
-    public Transform powerUp;
-    public GameObject ChallengeLevelPanel;
-    public GameManager gm;
-    AudioSource AudioSource;
-    private GameObject powerUpTag;
-    //private float timer = 0;
-    private int paddleHitCount = 0;
-    Vector2 accelerate;
+    public bool inPlay;                             //Check if the game status in currently in play
+    public float speed;                             //Ball speed
+    public int speedAcceleration = 50;              //On challenge, ball speed, force added to accelerate the ball
+    public bool accelerationRule ;                  //If the game is in speed up mode, it need to be true
+    public int powerUpRate;                         //Set the power up falling rate
+    public Transform paddle;                        //Import paddle position to init the ball position
+    public Transform powerUp;                       //Import power up position to spawn them
+    public GameObject ChallengeLevelPanel;          //Import challenge level to allow lost ball without losing live when this panel is active
+    public GameManager gm;                          //Use Game Manager
+    AudioSource AudioSource;                        //Audio of the ball
 
+    private Rigidbody2D rb;                         //Import the ball body to the script
+    private GameObject powerUpTag;                  //Retrieve the power up
+    private int paddleHitCount = 0;                 //Count paddle hit for the ball acceleration
     
     void Start()
     {
-        rigidBody = GetComponent<Rigidbody2D>();
+        rb  = GetComponent<Rigidbody2D>();
         AudioSource = GetComponent<AudioSource>();
-          
     }
 
     void Update()
     {
-        //Ball Freeze on Game Over
+        //On game over, ball script return only
         if (gm.gameOver) {
-            //Don't execute Ball script
             //set ball positon
             transform.position = paddle.position;
             return;
         }
 
-        //Init ball position on game start
+        //Init ball position on the paddle before the game start
         if (!inPlay)
         {
           transform.position = paddle.position;
         }
 
-        //launch the ball on game start
+        //Launch the ball on click to start the game
         if (Input.GetMouseButtonUp(0) && !inPlay)
         {
             inPlay = true;
-            rigidBody.AddForce(Vector2.up * speed);
+            rb.AddForce(Vector2.up * speed);
         }
-    }
-
-    void LaunchBall()
-    {
-        inPlay = true;
-        rigidBody.AddForce(Vector2.up * speed);
     }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        //ball lost
+        //Ball lost
         if (collision.CompareTag("bottom"))
         {
-            rigidBody.velocity = Vector2.zero;
+            //Stop the game
+            rb.velocity = Vector2.zero;
             inPlay = false;
             powerUpTag = GameObject.FindGameObjectWithTag("extraLife");
-            Destroy(powerUpTag);
-            paddleHitCount = 0;
-            //Lost Lives
+            Destroy(powerUpTag);    //Destroy the power up spawn if life is lost meanwhile
+            paddleHitCount = 0;     //Reset the paddle count to 0 to reset the ball speed for the speed up ball challenge
+            
+            //Lost Lives not in a level transition during challenge game mode
             if (!ChallengeLevelPanel || !ChallengeLevelPanel.activeSelf)
             {
-                gm.UpdateLives(-1);
-                int challengeLife = PlayerPrefs.GetInt("LIFE");
-                PlayerPrefs.SetInt("LIFE", challengeLife--);
-
+                gm.LivesManagement(-1); //life lost
             }
-            
         }
     }
 
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        //ball collision with brick
+        //Ball collision with brick
         if (collision.transform.CompareTag("brick"))
         {
+            //Get brick script access
             Brick brick = collision.gameObject.GetComponent<Brick>();
-            //brick break
+            //Brick breaking
             if (brick.hitsToBreak > 1)
             {
+               //Reduce the paddle hit counted for brick with multiple hit to destroy ; get the explosion component
                 brick.BreakBrick();
             }
             else
             {
-                //set powerup
-                int randChance = Random.Range(1, 101);
-                if (randChance < 50)
+                //Set and spawn powerup
+                int randChance = Random.Range(1, 101);  //Random number to set the power up rate
+                if (randChance < powerUpRate)
                 {
                     Instantiate(powerUp, collision.transform.position, collision.transform.rotation);
                 }
-
+                //Update the score
                 gm.UpdateScore(brick.points);
-                //Remove bricks
-                gm.UpdateNumberOfBricks();
+                //Update the number of bricks and manage the end of the level if no brick left
+                gm.BrickManagement();
+                //Destroy the brick
                 Destroy(collision.gameObject);
             }
-
+            //Brick breaking sound
             AudioSource.Play();
         }
 
+        //Use for the acceleration in the speed up challenge 
         if (collision.transform.CompareTag("paddle"))
         {
-            if (acceleration && inPlay)
+            if (accelerationRule && inPlay)
             {
                 paddleHitCount++;
-
-                if (paddleHitCount % 2 == 0)
-                {
-                    Debug.Log("Speed!!");
-                    rigidBody.AddForce(Vector2.up * speedAcceleration);
-                }
-
-
+                //Every 2 paddle hit is adding force to the ball
+               if (paddleHitCount % 2 == 0)
+               {
+                    rb.AddForce(Vector2.up * (speedAcceleration));
+               }
             }
-
-            Debug.Log(paddleHitCount);
-
         }
     }
 

@@ -8,10 +8,10 @@ public class PowerUp : MonoBehaviour
 
     private void Update()
     {
-        //fall of the powerup
+        //The power up is falling down
         transform.Translate(new Vector2(0f, -1f) * Time.deltaTime * speed);
 
-        //powerup lost
+        //The powerup up is lost
         if(transform.position.y < -5f)
         {
             Destroy(gameObject);
