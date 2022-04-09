@@ -30,9 +30,9 @@ The game has 2 playing modes : <br/>
     - Timer
     - Ball speed
     - Lives stored in game memory
-    - Endless achievment if all challenges are won with all your lives
+    - Endless achievment if all challenges are won end keep your lives
     - Free play during transition level
-    - 3 Levels
+    - 3 Challenges
       - Customize level : Level with ostacle
       - Time challenge : 1 minute to clear the level
       - Fast Ball : Ball speed up every 2 shots. Back to normal speed on life lost
@@ -72,7 +72,7 @@ I’ve been fortunate enough to have been privatly trained by Fahir from [awesom
 Other useful technologies I am confortable with :  restAPI, JavaScript, React, SQL, R and more... <br />
 Please visit my portfolio : [flo-portfolio.com](https://flo-portfolio.com) to know much more about me.
 
-That 1 week challenge was really fun 😊, let's hope you will like my work.
+This challenge was really fun 😊, let's hope you will like my work.
 
 
 
