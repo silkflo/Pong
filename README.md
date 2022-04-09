@@ -13,26 +13,29 @@ No design or animation required.
 Reward : a new job opportunity 🤩
 
 ## Game Features
-**Game Mode :**
+The game has 2 playing modes, endless play will end only of the player doesn't have any life left. <br/>
+Challenge Mode, with custom level.
+
 1. Endless Mode
     - Random brick colors
-    - Cracked brick on multi hit
     - Score
     - HighScore record
-    - Power up Life
     - Unlimited levels
 
 2. Challenge Mode
-    - Cracked brick on multi hit
-    - Power up Life
     - Timer
     - Ball speed
-    - Life record to the Endless Mode
-    - Keep playing to the Endless Mode
+    - Lives stored in game memory
+    - Keep playing to the Endless Mode upon success
     - 3 Levels
       - Customize level
       - Time challenge
       - Fast Ball
+ 
+ 3. Both Mode
+    - Pause on double tap
+    - Cracked brick on multi hit
+    - Power up Life
 
 Sprites download from [Unity Store](https://assetstore.unity.com/packages/templates/tutorials/bricks-breaker-starter-kit-27039#description).
 
@@ -46,7 +49,7 @@ I’ve been fortunate enough to have been privatly trained by Fahir from [awesom
 Other useful technologies I am confortable with :  restAPI, React website, SQL, R. <br />
 Please visit my portfolio : [flo-portfolio.com](https://flo-portfolio.com) to know much more about me.
 
-Developing that brick breaker was really fun 😊
+That 1 week challenge was really fun 😊, let's hope you will like my work.
 
 
 
