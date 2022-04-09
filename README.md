@@ -21,21 +21,31 @@ Challenge Mode, with custom level.
     - Score
     - HighScore record
     - Unlimited levels
+    - Brick build block dimension and location editable from the inspector 
 
 2. Challenge Mode
     - Timer
     - Ball speed
     - Lives stored in game memory
-    - Keep playing to the Endless Mode upon success
+    - Keep playing to the Endless Mode if all challenges are won
+    - Free play during transition level
     - 3 Levels
       - Customize level
       - Time challenge
       - Fast Ball
+    - Success Panel
+      - Retry
+      - Next Level
+      - Menu
  
  3. Both Mode
     - Pause on double tap
-    - Cracked brick on multi hit
-    - Power up Life
+    - Cracked brick on multiple hits
+    - Power up life
+    - Game Over panel
+      - Retry
+      - Menu
+   
 
 Sprites download from [Unity Store](https://assetstore.unity.com/packages/templates/tutorials/bricks-breaker-starter-kit-27039#description).
 
