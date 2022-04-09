@@ -23,13 +23,14 @@ The game has 2 playing modes : <br/>
     - Score
     - HighScore record
     - Unlimited levels
+    - Level display
     
 
 2. Challenge Mode
     - Timer
     - Ball speed
     - Lives stored in game memory
-    - Keep playing to the Endless Mode if all challenges are won
+    - Endless achievment if all challenges are won with all your lives
     - Free play during transition level
     - 3 Levels
       - Customize level
