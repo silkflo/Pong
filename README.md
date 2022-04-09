@@ -33,9 +33,9 @@ The game has 2 playing modes : <br/>
     - Endless achievment if all challenges are won with all your lives
     - Free play during transition level
     - 3 Levels
-      - Customize level
-      - Time challenge
-      - Fast Ball
+      - Customize level : Level with ostacle
+      - Time challenge : 1 minute to clear the level
+      - Fast Ball : Ball speed up every 2 shots. Back to normal speed on life lost
     - Success Panel
       - Retry
       - Next Level
@@ -58,7 +58,7 @@ The game has 2 playing modes : <br/>
         - Resets the lives by default to 3
       - Go to menu
         
-   
+Game Resolution : 1920x1080 Portrait
 
 Sprites download from [Unity Store](https://assetstore.unity.com/packages/templates/tutorials/bricks-breaker-starter-kit-27039#description).
 
