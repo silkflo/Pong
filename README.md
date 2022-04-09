@@ -13,15 +13,17 @@ No design or animation required.
 Reward : a new job opportunity 🤩
 
 ## Game Features
-The game has 2 playing modes, endless play will end only of the player doesn't have any life left. <br/>
-Challenge Mode, with custom level.
+The game has 2 playing modes : <br/>
+**Endless:** Only no more life will end the game. <br/>
+**Challenge:**  Custom levels.
 
 1. Endless Mode
+    - Block of bricks dimension and location editable from the inspector 
     - Random brick colors
     - Score
     - HighScore record
     - Unlimited levels
-    - Brick build block dimension and location editable from the inspector 
+    
 
 2. Challenge Mode
     - Timer
@@ -41,10 +43,20 @@ Challenge Mode, with custom level.
  3. Both Mode
     - Pause on double tap
     - Cracked brick on multiple hits
-    - Power up life
+    - Power up life on brick broken
     - Game Over panel
       - Retry
       - Menu
+    - Pause Panel
+      - Resume game
+      - Sounds settings
+        - Icon mute change
+        - Sound state saved
+      - Retry
+        - Restart the level
+        - Resets the lives by default to 3
+      - Go to menu
+        
    
 
 Sprites download from [Unity Store](https://assetstore.unity.com/packages/templates/tutorials/bricks-breaker-starter-kit-27039#description).
