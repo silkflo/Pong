@@ -46,7 +46,7 @@ Through years of personal, freelance and company experiences, I have acquired a 
 
 I’ve been fortunate enough to have been privatly trained by Fahir from [awesome Tuts](https://awesometuts.com) which was a great experience.
 
-Other useful technologies I am confortable with :  restAPI, React website, SQL, R. <br />
+Other useful technologies I am confortable with :  restAPI, JavaScript, React, SQL, R and more... <br />
 Please visit my portfolio : [flo-portfolio.com](https://flo-portfolio.com) to know much more about me.
 
 That 1 week challenge was really fun 😊, let's hope you will like my work.
