@@ -3,7 +3,7 @@
     "m_SelectedPackage": {
         "deviceId": "e856fd91",
         "name": "com.DefaultCompany.com.unity.template.mobile2D",
-        "processId": 27842,
+        "processId": 19250,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -12,12 +12,42 @@
             "deviceId": "e856fd91",
             "name": "com.DefaultCompany.com.unity.template.mobile2D",
             "processId": 25272,
-            "exited": false
+            "exited": true
         },
         {
             "deviceId": "e856fd91",
             "name": "com.DefaultCompany.com.unity.template.mobile2D",
             "processId": 27842,
+            "exited": true
+        },
+        {
+            "deviceId": "e856fd91",
+            "name": "com.DefaultCompany.com.unity.template.mobile2D",
+            "processId": 30603,
+            "exited": true
+        },
+        {
+            "deviceId": "e856fd91",
+            "name": "com.DefaultCompany.com.unity.template.mobile2D",
+            "processId": 13662,
+            "exited": true
+        },
+        {
+            "deviceId": "e856fd91",
+            "name": "com.oppo.launcher",
+            "processId": 3362,
+            "exited": false
+        },
+        {
+            "deviceId": "e856fd91",
+            "name": "com.DefaultCompany.com.unity.template.mobile2D",
+            "processId": 15882,
+            "exited": false
+        },
+        {
+            "deviceId": "e856fd91",
+            "name": "com.DefaultCompany.com.unity.template.mobile2D",
+            "processId": 19250,
             "exited": false
         }
     ],

@@ -7,14 +7,14 @@ public class Ball : MonoBehaviour
     
     public bool inPlay;                             //Check if the game status in currently in play
     public float speed;                             //Ball speed
-    public int speedAcceleration = 50;              //On challenge, ball speed, force added to accelerate the ball
+    public int speedAcceleration = 50;              //On challenge mode, force added to accelerate the ball
     public bool accelerationRule ;                  //If the game is in speed up mode, it need to be true
     public int powerUpRate;                         //Set the power up falling rate
     public Transform paddle;                        //Import paddle position to init the ball position
     public Transform powerUp;                       //Import power up position to spawn them
-    public GameObject ChallengeLevelPanel;          //Import challenge level to allow lost ball without losing live when this panel is active
+    public GameObject successPanel;                 //Import challenge level to allow lost ball without losing live when this panel is active
     public GameManager gm;                          //Use Game Manager
-    AudioSource AudioSource;                        //Audio of the ball
+    AudioSource AudioSource;                        //Audio of the brick
 
     private Rigidbody2D rb;                         //Import the ball body to the script
     private GameObject powerUpTag;                  //Retrieve the power up
@@ -31,14 +31,25 @@ public class Ball : MonoBehaviour
         //On game over, ball script return only
         if (gm.gameOver) {
             //set ball positon
-            transform.position = paddle.position;
-            return;
+             transform.position = paddle.position;
+             return;
         }
 
         //Init ball position on the paddle before the game start
         if (!inPlay)
         {
-          transform.position = paddle.position;
+            Time.timeScale = 1.0f;  //Debug the retry from the pause menu when double tap at that moment
+            transform.position = paddle.position;
+            Debug.Log("NOT IN PLAY");
+           //Ball flashing when player push the paddle to the border. This is the fix
+           if (transform.position.x < paddle.position.x)
+           {
+               transform.position =  paddle.position;
+           }
+           if (transform.position.x > paddle.position.x)
+           {
+               transform.position = paddle.position;
+           }
         }
 
         //Launch the ball on click to start the game
@@ -62,7 +73,7 @@ public class Ball : MonoBehaviour
             paddleHitCount = 0;     //Reset the paddle count to 0 to reset the ball speed for the speed up ball challenge
             
             //Lost Lives not in a level transition during challenge game mode
-            if (!ChallengeLevelPanel || !ChallengeLevelPanel.activeSelf)
+            if (!successPanel || !successPanel.activeSelf)
             {
                 gm.LivesManagement(-1); //life lost
             }
@@ -107,7 +118,7 @@ public class Ball : MonoBehaviour
             if (accelerationRule && inPlay)
             {
                 paddleHitCount++;
-                //Every 2 paddle hit is adding force to the ball
+               //Every 2 paddle hit is adding force to the ball
                if (paddleHitCount % 2 == 0)
                {
                     rb.AddForce(Vector2.up * (speedAcceleration));

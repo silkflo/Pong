@@ -8,39 +8,82 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public enum SceneName { Endless , Challenge }   //Get the type of game play
-    public SceneName sceneName;                         
+    public SceneName sceneName;
+    public float maxDoubbleTapTime;                 //Time interval to validate a double touch
     public int currentLevelIndex = 0;               //Endless game Level number
     public int bricksColumnQty = 5;                 //Bricks column quantity
-    public int brickRowQty = 3;
-    public float brickPositionX = -2.2f;           //Adjust the brick block position from on X
+    public int brickRowQty = 3;                     //Brick row quantity
+    public float brickPositionX = -2.2f;            //Adjust the brick block position from on X
+    public GameObject[] bricks;                     //Available bricks for the endless game
+    public int numberOfBricks;                      //Keep track of the brick quantity
+    public bool isTimeChallenge;                    //True if it's the time challenge
     public float timeChallenge;                     //Max time allowed for the time challenge
     public Text livesText;                          //Lives display text
+    public Text levelText;                          //Display level number
     public Text scoreText;                          //Score display text
-    public Text highScoreText;                      //Highscore Display text in the game over panel
+    public Text highScoreGOText;                    //Highscore Display text in the game over panel
+    public Text highScorePauseText;                 //Highscore Display text in the pause panel
     public bool gameOver;                           //Set to true, the gameplay is disabled
     public GameObject gameOverPanel;                //Display of the game over panel
     public GameObject successPanel;                 //Panel displayed between levels
-    public GameObject[] bricks;                     //Available bricks for the endless game
+    public GameObject pausePanel;                   //Pause panel
+    public GameObject SoundOn;                      //To display the speaker icon
+    public GameObject SoundOff;                     //To display the mute icon
 
     private int score;                              //Score
-    private int numberOfBricks;                     //Keep track on the brick amount left
-    private int lives;                              //lives
-
+    private int lives;                              //Lives
+    private int tapCount;                           //For the double tap validation                        
+    private float doubleTapTime;                    //For the double tap speed 
+    private bool isMuted;                           //Sound state
+    private int intMutedStatus;                     //1: game sound muted || 0: game sound activated
+    private int highScore;                          //Get the highscore value for the display
     void Start()
     {
-        //Lives Text Display
+        //Lives Text Display 
         lives = PlayerPrefs.GetInt("LIFE");
-        livesText.text = "Lives: " + lives;
-                
+        livesText.text = lives.ToString();
+        
+        //Get high score
+        highScore =  PlayerPrefs.GetInt("HIGHSCORE");
         //1st Endless Mode level load
         if (sceneName == SceneName.Endless)
         {
             scoreText.text = score.ToString(); //Score display
+            //levelText.text = "level " + (currentLevelIndex + 1);   //Level display
             LoadLevel();    //Add the bricks
         }
       
         numberOfBricks = GameObject.FindGameObjectsWithTag("brick").Length;      //Get level bricks quantity
+        tapCount = 0;  //Init for the double tap
+       
+        //Set 1 is true
+        isMuted = PlayerPrefs.GetInt("MUTED")==1;
+        AudioListener.pause = isMuted; //start the sound according isMuted state
+
+        //Set the correct image for the mute button
+        intMutedStatus = PlayerPrefs.GetInt("MUTED");
+        if (intMutedStatus == 1)
+        {
+            SoundOn.gameObject.SetActive(false);
+            SoundOff.gameObject.SetActive(true);
+        }
+        else
+        {
+            SoundOn.gameObject.SetActive(true);
+            SoundOff.gameObject.SetActive(false);
+        }
     }
+
+    void Update()
+    {
+        PauseGame();    //Activate the pause panel
+
+        if (sceneName == SceneName.Endless)
+        {
+            levelText.text = "level " + (currentLevelIndex);   //Level number display
+        }
+    }
+
 
     //Manage the lives
     public void LivesManagement(int changeInLives)
@@ -53,7 +96,8 @@ public class GameManager : MonoBehaviour
             lives = 0;
             GameOver(); //Stop the gameplay and show the game over panel
             }
-            livesText.text = "Lives: " + lives;     //Display the lives
+
+        livesText.text = lives.ToString();     //Display the lives
     }
 
     //Manage the bricks
@@ -73,6 +117,7 @@ public class GameManager : MonoBehaviour
             } else //Challenge Mode
             {
                 successPanel.SetActive(true); //Display success panel
+
             }
         }
     }
@@ -136,21 +181,24 @@ public class GameManager : MonoBehaviour
         {
             //High score beaten set new highscore
             PlayerPrefs.SetInt("HIGHSCORE", score);
-            highScoreText.text = "New High Score " + score;     //Display high score
+            highScoreGOText.text = "New High Score " + score;     //Display high score
         }
         else if(sceneName == SceneName.Endless)
         {
-            highScoreText.text = "High Score " + score;     //Display high score
+            highScoreGOText.text = "High Score " + highScore;     //Display high score in Game over panel
+           
         }
     }
   
 //GAME NAVIGUATION
     public void GoToMenu()
     {
+        Time.timeScale = 1.0f;
         SceneManager.LoadScene("StartMenu");
     }
     public void GoToEndless(bool gameOver)
     {
+        Time.timeScale = 1.0f;
         if (gameOver)
         {
             SceneManager.LoadScene("Endless");
@@ -162,6 +210,7 @@ public class GameManager : MonoBehaviour
     }
     public void GoToChallenge1(bool gameOver)
     {
+        Time.timeScale = 1.0f;
         if (gameOver)
         {
             SceneManager.LoadScene("Challenge_1");
@@ -169,11 +218,13 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            SceneManager.LoadScene("Challenge_1");
+           SceneManager.LoadScene("Challenge_1");
         };
     } 
     public void GoToChallenge2(bool gameOver)
     {
+        Time.timeScale = 1.0f;
+       
         if (gameOver)
         {
             SceneManager.LoadScene("Challenge_2");
@@ -181,11 +232,12 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            SceneManager.LoadScene("Challenge_2");
+           SceneManager.LoadScene("Challenge_2");
         }
     }
     public void GoToChallenge3(bool gameOver)
     {
+        Time.timeScale = 1.0f;
         if (gameOver)
         {
             SceneManager.LoadScene("Challenge_3");
@@ -193,16 +245,87 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            SceneManager.LoadScene("Challenge_3");
+           SceneManager.LoadScene("Challenge_3");
         }
     }
 
     public void PauseGame()
     {
-        Time.timeScale = 0;
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);    //Get the touch
+            Vector2 touchPos = Camera.main.ScreenToWorldPoint(touch.position);  //Anywhere from the screen
+
+            //Count the taps and validate the speed of the taps
+            if (touch.phase == TouchPhase.Ended)
+            {
+                tapCount += 1;
+            }
+           
+            if (tapCount == 1)
+            {
+                doubleTapTime = Time.time + maxDoubbleTapTime;
+            }
+            else if (tapCount == 2 && Time.time <= doubleTapTime && Time.timeScale != 0.0f)
+            {
+                //Game paused
+
+                if (highScorePauseText)
+                {
+                    highScorePauseText.text = "High Score " + highScore;     //Display high score in pause panel
+                }
+                pausePanel.gameObject.SetActive(true);
+                Time.timeScale =  0.0f;
+                tapCount = 0;
+            }
+        }
+        if (Time.time > doubleTapTime)
+        {
+            tapCount = 0;   //init tapCount
+        }
     }
-    public void ResumeGame()
+
+    //Back to the game from tha pause
+    public void BackFromPause()
     {
-        Time.timeScale = 1;
+        pausePanel.gameObject.SetActive(false);
+        Time.timeScale = 1.0f;
+    }
+
+    //Mute the game
+    public void SoundToOff()
+    {
+        isMuted = true;         //Alow to mute the game
+       
+        PlayerPrefs.SetInt("MUTED", isMuted ? 1 : 0);   //Convert bool to int true = 1 and save value
+        intMutedStatus = PlayerPrefs.GetInt("MUTED");
+        if(intMutedStatus == 1)
+        {
+            SoundOn.gameObject.SetActive(false);
+            SoundOff.gameObject.SetActive(true);
+        }
+        
+        AudioListener.pause = isMuted;
+
+    }
+
+    //Unmute the game
+    public void SoundToOn()
+    {
+       // SoundOn.gameObject.SetActive(true);
+      //  SoundOff.gameObject.SetActive(false);
+        
+        isMuted = false;         //Alow to unmute the game
+        PlayerPrefs.SetInt("MUTED", isMuted ? 1 : 0);   //Convert bool to int true = 1 and save value
+        intMutedStatus = PlayerPrefs.GetInt("MUTED");
+              
+        if (intMutedStatus == 0)
+        {
+            SoundOn.gameObject.SetActive(true);
+            SoundOff.gameObject.SetActive(false);
+        }
+
+        AudioListener.pause = isMuted;
     }
 }
+   

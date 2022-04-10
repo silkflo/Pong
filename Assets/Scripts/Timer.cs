@@ -20,7 +20,7 @@ public class Timer : MonoBehaviour
     {
         if(timeValue > 0 )
         {
-            if (ball.inPlay)
+            if (ball.inPlay && gm.numberOfBricks > 0)
             {
                 timeValue -= Time.deltaTime;    //Reduce the time by 1 each second, as long the game is in play and time not out
             }

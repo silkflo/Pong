@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &110527921109133210
+--- !u!1 &7570457862810320454
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,8 +8,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 110527921109133208}
-  - component: {fileID: 110527921109133211}
+  - component: {fileID: 7570457862810320452}
+  - component: {fileID: 7570457862810320455}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -17,13 +17,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &110527921109133208
+--- !u!4 &7570457862810320452
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 110527921109133210}
+  m_GameObject: {fileID: 7570457862810320454}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -32,28 +32,36 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &110527921109133211
+--- !u!114 &7570457862810320455
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 110527921109133210}
+  m_GameObject: {fileID: 7570457862810320454}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8292a9c5267baf24880fb42f97b395e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lives: 3
-  score: 0
-  numberOfBricks: 1
+  sceneName: 1
+  maxDoubbleTapTime: 0.1
   currentLevelIndex: 0
-  brickLeftMargin: -2.2
+  bricksColumnQty: 5
+  brickRowQty: 3
+  brickPositionX: -2.2
+  isTimeChallenge: 0
+  timeChallenge: 60
+  numberOfBricks: 1
   livesText: {fileID: 0}
   scoreText: {fileID: 0}
   highScoreText: {fileID: 0}
+  highScorePauseText: {fileID: 0}
+  levelText: {fileID: 0}
   gameOver: 0
   gameOverPanel: {fileID: 0}
-  loadLevelPanel: {fileID: 0}
-  blueBrick: {fileID: 8115768289900520568, guid: 7cb373dd414d8cc44bbbac490637bcd0, type: 3}
-  yellowBrick: {fileID: 1174908717644672492, guid: d8f98e89e66e117418055495e5b8f41f, type: 3}
+  successPanel: {fileID: 0}
+  bricks: []
+  pausePanel: {fileID: 0}
+  SoundOn: {fileID: 0}
+  SoundOff: {fileID: 0}
