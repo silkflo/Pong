@@ -1,7 +1,7 @@
 # Pong 2D
 Brick breaker game developed with Unity in 2D for mobile Android.
 
-[![Watch the video](https://i.imgur.com/HXpt6fW.jpg)](https://youtu.be/zJzSYIfuQ6Y)
+[![Watch the video](https://i.imgur.com/WRninwW.jpg)](https://youtu.be/zJzSYIfuQ6Y)
 
 ![This is an image](https://i.imgur.com/N0im8gt.jpg)
 
