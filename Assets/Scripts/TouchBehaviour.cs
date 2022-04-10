@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class TouchBehaviour : MonoBehaviour
 {
-    private Rigidbody2D rb;                                  //Import the paddle body to the script
-    private float deltaX;                                    //Distance between the touch and the paddle
-    public float maxDoubbleTapTime;
+    private Rigidbody2D rb;                    //Import the paddle body to the script
+    private float deltaX;                      //Distance between the touch and the paddle
+    public float maxDoubbleTapTime=0.1f;       //Time allow between 2 taps for the double tap
+    public Ball ball;
     public GameManager gm;
 
-    private void Start()
+  private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         
@@ -22,9 +23,10 @@ public class TouchBehaviour : MonoBehaviour
            return;
         }
 
+      
 
         //On touch
-        if (Input.touchCount > 0)
+        if (Input.touchCount > 0 )
         {
             Touch touch = Input.GetTouch(0);    //Get the touch
             Vector2 touchPos = Camera.main.ScreenToWorldPoint(touch.position);  //Anywhere from the screen
@@ -36,13 +38,12 @@ public class TouchBehaviour : MonoBehaviour
                     break;
                 case TouchPhase.Moved:
                     rb.MovePosition(new Vector2(touchPos.x - deltaX, transform.position.y));    //Object follow the touch on X (because it always keep the same distance "DeltaX" between your touch and the object)
+                                       
                     break;
                 case TouchPhase.Ended:
                     rb.velocity = Vector2.zero;     //Object not moving
                     break;
             }
-
         }
-           
     }
 }

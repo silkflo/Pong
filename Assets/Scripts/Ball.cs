@@ -17,7 +17,7 @@ public class Ball : MonoBehaviour
     AudioSource AudioSource;                        //Audio of the brick
 
     private Rigidbody2D rb;                         //Import the ball body to the script
-    private GameObject powerUpTag;                  //Retrieve the power up
+    private GameObject[] powerUpTag;                //Retrieve the power up
     private int paddleHitCount = 0;                 //Count paddle hit for the ball acceleration
     
     void Start()
@@ -28,7 +28,7 @@ public class Ball : MonoBehaviour
 
     void Update()
     {
-        //On game over, ball script return only
+        //On game over, return 
         if (gm.gameOver) {
             //set ball positon
              transform.position = paddle.position;
@@ -40,16 +40,6 @@ public class Ball : MonoBehaviour
         {
             Time.timeScale = 1.0f;  //Debug the retry from the pause menu when double tap at that moment
             transform.position = paddle.position;
-            Debug.Log("NOT IN PLAY");
-           //Ball flashing when player push the paddle to the border. This is the fix
-           if (transform.position.x < paddle.position.x)
-           {
-               transform.position =  paddle.position;
-           }
-           if (transform.position.x > paddle.position.x)
-           {
-               transform.position = paddle.position;
-           }
         }
 
         //Launch the ball on click to start the game
@@ -68,8 +58,12 @@ public class Ball : MonoBehaviour
             //Stop the game
             rb.velocity = Vector2.zero;
             inPlay = false;
-            powerUpTag = GameObject.FindGameObjectWithTag("extraLife");
-            Destroy(powerUpTag);    //Destroy the power up spawn if life is lost meanwhile
+            powerUpTag = GameObject.FindGameObjectsWithTag("extraLife");
+            for (int i = 0;i < powerUpTag.Length; i++)
+            {
+                Destroy(powerUpTag[i]);    //Destroy all the power up spawn if life is lost meanwhile
+            }
+
             paddleHitCount = 0;     //Reset the paddle count to 0 to reset the ball speed for the speed up ball challenge
             
             //Lost Lives not in a level transition during challenge game mode
@@ -85,7 +79,7 @@ public class Ball : MonoBehaviour
         //Ball collision with brick
         if (collision.transform.CompareTag("brick"))
         {
-            //Get brick script access
+            //Get brick gameObject
             Brick brick = collision.gameObject.GetComponent<Brick>();
             //Brick breaking
             if (brick.hitsToBreak > 1)

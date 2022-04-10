@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PowerUp : MonoBehaviour
 {
-    public float speed;
+    public float speed;             //falling speed of the bonus
 
     private void Update()
     {
