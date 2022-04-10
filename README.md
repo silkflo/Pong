@@ -3,7 +3,10 @@ Brick breaker game developed with Unity in 2D for mobile Android.
 
 [![Watch the video](https://i.imgur.com/WRninwW.jpg)](https://youtu.be/zJzSYIfuQ6Y)
 
-![This is an image](https://i.imgur.com/N0im8gt.jpg)
+ | Endless Mode | Pause Menu in challenge mode |
+ | ----- | ----- |
+ | ![This is an image](https://i.imgur.com/vlOeK9a.jpg)   | ![This is an image](https://i.imgur.com/HcxDPL8.jpg)   |
+ 
 
 ## Challenge
 Build from scratch a brick breaker game with Unity in 1 week 🐱‍👤 <br/>
