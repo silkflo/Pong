@@ -62,7 +62,7 @@ The game has 2 playing modes : <br/>
       - Go to menu
         
 **Game Resolution:** 1920x1080 Portrait <br/>
-**Bug report:** [Google Spread Sheet](https://docs.google.com/spreadsheets/d/1KvUI13Q2Id3HqHFMAimQBNhM42qU-jyiPNVlCGJ_kxY/edit#gid=0) <br/>
+**Bug report:** [Google Spread Sheet](https://docs.google.com/spreadsheets/d/1KvUI13Q2Id3HqHFMAimQBNhM42qU-jyiPNVlCGJ_kxY/edit?usp=sharing) <br/>
 **Sprites:** [Unity Store](https://assetstore.unity.com/packages/templates/tutorials/bricks-breaker-starter-kit-27039#description). <br />
 
 ## About Me
