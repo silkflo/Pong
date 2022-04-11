@@ -33,7 +33,7 @@ The game has 2 playing modes : <br/>
     - Timer
     - Ball speed
     - Lives stored in game memory
-    - Endless achievment if all challenges are won end keep your lives
+    - Endless achievment if all challenges are won, it keep your lives
     - Free play during transition level
     - 3 Challenges
       - Customize level : Level with ostacle
