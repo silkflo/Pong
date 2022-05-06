@@ -79,6 +79,8 @@ Please visit my portfolio : [flo-portfolio.com](https://flo-portfolio.com) to kn
 
 This challenge was really fun 😊, let's hope you will like my work.
 
+** Assignement result for Anymind Group : Lost **
+
 
 
 
